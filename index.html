@@ -76,6 +76,22 @@
             font-weight: bold;
             flex-shrink: 0;
         }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
@@ -89,9 +105,9 @@
 
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
                 <button onclick="app.showView('landing')" class="hover:text-blue-700 transition-colors border-b-2 border-transparent hover:border-blue-700 py-1">Inicio</button>
+                <button onclick="document.getElementById('demo-video').scrollIntoView({behavior:'smooth'})" class="hover:text-blue-700 transition-colors py-1">Demostración</button>
                 <button onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})" class="hover:text-blue-700 transition-colors py-1">¿Cómo copiar?</button>
                 <button onclick="document.getElementById('advantages').scrollIntoView({behavior:'smooth'})" class="hover:text-blue-700 transition-colors py-1">Ventajas</button>
-                <button onclick="app.showView('privacy')" class="hover:text-blue-700 transition-colors py-1">Privacidad</button>
             </nav>
 
             <div class="flex items-center space-x-4">
@@ -112,9 +128,9 @@
                 <button onclick="app.toggleMobileMenu()" class="text-slate-500 text-2xl">✕</button>
             </div>
             <button onclick="app.showView('landing'); app.toggleMobileMenu()" class="text-left text-lg font-bold py-2 border-b">Inicio</button>
+            <button onclick="document.getElementById('demo-video').scrollIntoView(); app.toggleMobileMenu()" class="text-left text-lg font-bold py-2 border-b">Demostración</button>
             <button onclick="document.getElementById('how-it-works').scrollIntoView(); app.toggleMobileMenu()" class="text-left text-lg font-bold py-2 border-b">¿Cómo funciona?</button>
             <button onclick="app.showView('privacy'); app.toggleMobileMenu()" class="text-left text-lg font-bold py-2 border-b">Privacidad</button>
-            <button onclick="app.showView('auth'); app.toggleMobileMenu()" class="text-left text-lg font-bold py-2 border-b">Acceder</button>
         </div>
     </header>
 
@@ -152,6 +168,26 @@
                         <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-50 flex flex-col items-center">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" class="w-16 h-16" alt="Google Drive Cuenta Destino">
                             <span class="mt-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cuenta B</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN VIDEO DEMOSTRACIÓN -->
+                <section id="demo-video" class="py-24">
+                    <div class="max-w-4xl mx-auto space-y-10">
+                        <div class="text-center space-y-4">
+                            <h2 class="text-3xl md:text-5xl font-black text-slate-900">Mira cómo funciona en segundos</h2>
+                            <p class="text-slate-500 text-lg">Descubre la simplicidad de nuestra plataforma con este breve video tutorial.</p>
+                        </div>
+                        <div class="video-container bg-slate-200">
+                            <!-- Sustituye el ID de Youtube por el de tu video real -->
+                            <iframe 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                title="Demostración Cloudstransfer" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                         </div>
                     </div>
                 </section>
