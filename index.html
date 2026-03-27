@@ -27,8 +27,20 @@
             color: #1e40af;
             font-weight: 700;
             font-size: 1.25rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             margin-bottom: 0.75rem;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+        }
+        .legal-content p, .legal-content li {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .legal-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         /* Sección Estilo MultCloud */
@@ -72,6 +84,19 @@
             overflow: hidden;
             border-radius: 1.5rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Slider de Testimonios */
+        #testimonial-slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .testimonial-card {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+        @media (min-width: 768px) {
+            .testimonial-card { min-width: 33.333%; }
         }
     </style>
 </head>
@@ -133,22 +158,17 @@
                         </div>
                     </section>
 
-                    <!-- NUEVA SECCIÓN: TRANSFERENCIA DRIVE A DRIVE (Inspirada en imagen 2) -->
+                    <!-- SECCIÓN: TRANSFERENCIA DRIVE A DRIVE -->
                     <section class="py-12 flex flex-col lg:flex-row items-center gap-16">
                         <div class="lg:w-1/2 flex items-center justify-center">
                             <div class="relative flex items-center gap-4 md:gap-12">
-                                <!-- Contenedor Nube Principal -->
                                 <div class="absolute -top-16 left-1/2 -translate-x-1/2 text-blue-500 opacity-20">
                                     <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 19c-3.037 0-5.5-2.463-5.5-5.5 0-2.31 1.423-4.288 3.444-5.123C15.158 7.502 15 6.764 15 6c0-2.761 2.239-5 5-5s5 2.239 5 5c0 .764-.158 1.502-.444 2.377C26.577 9.212 28 11.19 28 13.5c0 3.037-2.463 5.5-5.5 5.5h-5z"/></svg>
                                 </div>
-                                
-                                <!-- Cuenta Origen -->
                                 <div class="bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-slate-100 z-10 flex flex-col items-center">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" class="w-16 h-16 md:w-20 md:h-20" alt="Google Drive Origen">
                                     <span class="mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cuenta A</span>
                                 </div>
-
-                                <!-- Flujo de Transferencia -->
                                 <div class="flex flex-col items-center gap-4">
                                     <div class="text-blue-600 bg-blue-50 p-4 rounded-full shadow-inner">
                                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
@@ -160,15 +180,12 @@
                                         <span class="arrow-item">›</span>
                                     </div>
                                 </div>
-
-                                <!-- Cuenta Destino -->
                                 <div class="bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-slate-100 z-10 flex flex-col items-center">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" class="w-16 h-16 md:w-20 md:h-20" alt="Google Drive Destino">
                                     <span class="mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cuenta B</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="lg:w-1/2 space-y-6">
                             <h4 class="text-blue-600 font-bold tracking-tight uppercase text-sm">Transferencia en la nube</h4>
                             <h2 class="text-3xl md:text-4xl font-black text-slate-900">Transferir archivos entre unidades Drive</h2>
@@ -194,6 +211,26 @@
                                 </div>
                                 <p class="mt-4 font-bold text-slate-400">Tutorial CloudsTransfers</p>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- SECCIÓN: RESEÑAS (ESTILO SOLICITADO) -->
+                    <section class="py-12 space-y-12">
+                        <div class="text-center">
+                            <h2 class="text-3xl font-black text-slate-900">Con la confianza de más de 2.000.000 de usuarios registrados.</h2>
+                        </div>
+                        
+                        <div class="relative group">
+                            <!-- Contenedor del Slider -->
+                            <div class="overflow-hidden py-4">
+                                <div id="testimonial-slider" class="flex">
+                                    <!-- Testimonios generados dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <!-- Botones de Navegación -->
+                            <button onclick="slider.prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white shadow-lg border border-slate-200 rounded-full w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-700 hover:border-blue-700 transition-all z-20">❮</button>
+                            <button onclick="slider.next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white shadow-lg border border-slate-200 rounded-full w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-700 hover:border-blue-700 transition-all z-20">❯</button>
                         </div>
                     </section>
 
@@ -225,27 +262,6 @@
                             </div>
                         </div>
                     </section>
-
-                    <!-- SECCIÓN: RESEÑAS -->
-                    <section class="space-y-12 pb-12">
-                        <div class="text-center">
-                            <h2 class="text-3xl font-bold text-slate-900">Reseñas de clientes</h2>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                                <p class="text-slate-600 italic mb-6">"Pude mover mis fotos de graduación de mi cuenta educativa a mi personal sin complicaciones. Excelente herramienta."</p>
-                                <div class="font-bold text-sm">Carlos Ruiz</div>
-                            </div>
-                            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                                <p class="text-slate-600 italic mb-6">"Como fotógrafo manejo archivos pesados. CloudsTransfers me ahorró días de subida manual."</p>
-                                <div class="font-bold text-sm">Marta Sofía</div>
-                            </div>
-                            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                                <p class="text-slate-600 italic mb-6">"La mejor opción para transferir carpetas completas manteniendo el orden."</p>
-                                <div class="font-bold text-sm">Jorge David</div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
 
                 <!-- SECCIÓN VISUAL FINAL (MultCloud Style) -->
@@ -253,7 +269,7 @@
                     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
                         <div class="text-white space-y-6 md:w-1/2">
                             <h2 class="text-3xl md:text-5xl font-black leading-tight">
-                                CloudsTransfer <br>
+                                CloudsTransfers <br>
                                 <span class="text-blue-300">Conecta tus cuentas Drive.</span>
                             </h2>
                             <p class="text-lg text-blue-100">
@@ -266,8 +282,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Visual Iconos Flotantes -->
                         <div class="md:w-1/2 relative h-[300px] w-full flex items-center justify-center">
                             <div class="bg-white p-6 rounded-3xl shadow-2xl floating-icon">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" class="w-16 h-16" alt="Icono Drive">
@@ -288,22 +302,125 @@
             <!-- VISTAS LEGALES -->
             <div id="view-terms" class="hidden max-w-4xl mx-auto px-6 py-12">
                 <div class="legal-card">
-                    <button onclick="app.showView('landing')" class="text-blue-700 font-bold mb-8">← Volver al inicio</button>
+                    <button onclick="app.showView('landing')" class="text-blue-700 font-bold mb-8 flex items-center gap-2">
+                        <span>←</span> Volver al inicio
+                    </button>
                     <div class="legal-content">
                         <h1 class="text-3xl font-black text-slate-900 mb-2">Términos y Condiciones</h1>
-                        <p>Última actualización: 27 marzo 2026</p>
-                        <h3>1. Descripción del servicio</h3>
-                        <p>Plataforma para transferir archivos entre cuentas Google Drive...</p>
+                        <p class="text-sm text-slate-400 italic">Última actualización: 27 de marzo de 2026</p>
+                        
+                        <h3>1. Aceptación de los Términos</h3>
+                        <p>Al acceder y utilizar CloudsTransfers.com, usted acepta cumplir con estos Términos y Condiciones. Si no está de acuerdo con alguna parte, no podrá utilizar el servicio.</p>
+
+                        <h3>2. Descripción del Servicio</h3>
+                        <p>CloudsTransfers es una herramienta que facilita la transferencia y copiado de archivos entre cuentas de Google Drive utilizando la infraestructura de Google Apps Script. No almacenamos copias de sus archivos en servidores propios.</p>
+
+                        <h3>3. Responsabilidad del Usuario</h3>
+                        <p>Usted es responsable de asegurar que tiene los derechos necesarios sobre los archivos que transfiere. CloudsTransfers no se hace responsable por la pérdida de datos derivada de un mal uso del servicio o fallos en la infraestructura de terceros.</p>
                     </div>
                 </div>
             </div>
 
             <div id="view-privacy" class="hidden max-w-4xl mx-auto px-6 py-12">
                 <div class="legal-card">
-                    <button onclick="app.showView('landing')" class="text-blue-700 font-bold mb-8">← Volver al inicio</button>
+                    <button onclick="app.showView('landing')" class="text-blue-700 font-bold mb-8 flex items-center gap-2">
+                        <span>←</span> Volver al inicio
+                    </button>
                     <div class="legal-content">
                         <h1 class="text-3xl font-black text-slate-900 mb-2">Política de Privacidad</h1>
-                        <p>Respetamos tu privacidad...</p>
+                        <p class="text-sm text-slate-400 italic">Última actualización: 27 de marzo de 2026</p>
+                        
+                        <p>En <strong>cloudstrafer.com</strong>, respetamos tu privacidad y estamos comprometidos a proteger la información personal de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información cuando utilizas nuestro servicio.</p>
+
+                        <h3>1. Información que recopilamos</h3>
+                        <p>Podemos recopilar los siguientes tipos de información:</p>
+                        
+                        <p><strong>a) Información de cuenta</strong></p>
+                        <ul>
+                            <li>Dirección de correo electrónico</li>
+                            <li>Nombre del usuario</li>
+                            <li>Información básica del perfil de Google</li>
+                        </ul>
+
+                        <p><strong>b) Datos de acceso a Google Drive</strong></p>
+                        <ul>
+                            <li>Acceso autorizado mediante OAuth a tus cuentas de Google Drive</li>
+                            <li>Archivos y carpetas seleccionados para transferencia</li>
+                        </ul>
+                        <p><strong>Importante:</strong> No almacenamos tus contraseñas de Google en ningún momento.</p>
+
+                        <p><strong>c) Información técnica</strong></p>
+                        <ul>
+                            <li>Dirección IP</li>
+                            <li>Tipo de dispositivo y navegador</li>
+                            <li>Registros de actividad dentro de la plataforma</li>
+                        </ul>
+
+                        <h3>2. Uso de la información</h3>
+                        <p>Utilizamos la información recopilada para:</p>
+                        <ul>
+                            <li>Permitir la transferencia de archivos entre cuentas de Google Drive</li>
+                            <li>Mejorar la funcionalidad del servicio</li>
+                            <li>Proporcionar soporte técnico</li>
+                            <li>Detectar y prevenir actividades fraudulentas o abusivas</li>
+                        </ul>
+
+                        <h3>3. Acceso a Google Drive</h3>
+                        <p>CloudStrafer solicita permisos limitados para:</p>
+                        <ul>
+                            <li>Leer archivos seleccionados por el usuario</li>
+                            <li>Copiar o transferir archivos entre cuentas autorizadas</li>
+                        </ul>
+                        <p>No accedemos, modificamos ni compartimos archivos fuera de las acciones que el usuario autoriza explícitamente.</p>
+
+                        <h3>4. Almacenamiento de datos</h3>
+                        <ul>
+                            <li>No almacenamos archivos transferidos en nuestros servidores de forma permanente.</li>
+                            <li>Las transferencias se realizan de forma directa entre las cuentas de Google Drive.</li>
+                            <li>Los datos temporales pueden ser eliminados automáticamente tras completar la transferencia.</li>
+                        </ul>
+
+                        <h3>5. Compartición de información</h3>
+                        <p>No vendemos, alquilamos ni compartimos tu información personal con terceros, excepto en los siguientes casos:</p>
+                        <ul>
+                            <li>Cumplimiento de obligaciones legales</li>
+                            <li>Protección contra fraude o actividades ilegales</li>
+                            <li>Proveedores de servicios necesarios para operar la plataforma (bajo estricta confidencialidad)</li>
+                        </ul>
+
+                        <h3>6. Seguridad</h3>
+                        <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tu información, incluyendo:</p>
+                        <ul>
+                            <li>Cifrado de datos</li>
+                            <li>Acceso restringido</li>
+                            <li>Protocolos seguros (HTTPS)</li>
+                        </ul>
+                        <p>Sin embargo, ningún sistema es 100% seguro, por lo que no podemos garantizar seguridad absoluta.</p>
+
+                        <h3>7. Derechos del usuario</h3>
+                        <p>Tienes derecho a:</p>
+                        <ul>
+                            <li>Acceder a tus datos personales</li>
+                            <li>Solicitar la eliminación de tu información</li>
+                            <li>Revocar el acceso a tu cuenta de Google en cualquier momento desde tu panel de Google</li>
+                        </ul>
+
+                        <h3>8. Cookies</h3>
+                        <p>Podemos utilizar cookies para:</p>
+                        <ul>
+                            <li>Mejorar la experiencia del usuario</li>
+                            <li>Analizar el uso del sitio</li>
+                        </ul>
+                        <p>Puedes configurar tu navegador para rechazar cookies si lo prefieres.</p>
+
+                        <h3>9. Cambios en esta política</h3>
+                        <p>Nos reservamos el derecho de modificar esta Política de Privacidad en cualquier momento. Los cambios serán publicados en esta página con la fecha de actualización.</p>
+
+                        <h3>10. Contacto</h3>
+                        <p>Si tienes preguntas sobre esta Política de Privacidad, puedes contactarnos en:</p>
+                        <p>📧 Correo electrónico: <a href="mailto:jotaa53132@gmail.com" class="text-blue-700 font-bold">jotaa53132@gmail.com</a></p>
+                        
+                        <p class="mt-8 font-bold text-slate-900 border-t pt-4">Al utilizar CloudStrafer.com, aceptas esta Política de Privacidad.</p>
                     </div>
                 </div>
             </div>
@@ -312,7 +429,7 @@
             <div id="view-auth" class="hidden min-h-[70vh] flex items-center justify-center p-6 text-center">
                 <div class="bg-white w-full max-w-md p-8 rounded-3xl shadow-xl border border-slate-100">
                     <h2 class="text-2xl font-bold mb-6">Acceder</h2>
-                    <a href="https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec" target="_blank" class="flex items-center justify-center gap-3 w-full border border-slate-200 py-3 rounded-xl hover:bg-slate-50 font-bold">
+                    <a href="https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec" target="_blank" class="flex items-center justify-center gap-3 w-full border border-slate-200 py-3 rounded-xl hover:bg-slate-50 font-bold transition-colors">
                         <img src="https://www.google.com/favicon.ico" class="w-5 h-5" alt="G"> Iniciar sesión con Google
                     </a>
                 </div>
@@ -321,10 +438,63 @@
     </main>
 
     <script>
+        const testimonials = [
+            { name: "Olivia Lam", text: "En los últimos años he descubierto que CloudsTransfers es una herramienta realmente útil para transferir archivos entre nubes directamente sin la molestia de descargar y volver a subir un montón de archivos." },
+            { name: "RJ Ruggles", text: "Si necesitas migrar de una solución en la nube a otra, prueba CloudsTransfers. Yo lo usé y transferí más de 5 TB de datos de una cuenta Drive a otra. Fue increíblemente fácil." },
+            { name: "PALANQUETA", text: "Estoy encantada de poder usar CloudsTransfers. Convierte una pesadilla en una experiencia maravillosa. Tengo tantas cuentas que me resulta imposible gestionarlas todas." },
+            { name: "Carlos Méndez", text: "La mejor opción para mover carpetas pesadas entre mi cuenta personal y la de la universidad. Rápido y sin complicaciones." },
+            { name: "Sara Villalobos", text: "Literalmente me ahorró días de trabajo. Tenía que mover 200GB de fotos y CloudsTransfers lo hizo mientras yo dormía." },
+            { name: "Marco Polo", text: "Increíble. La interfaz es sencilla y el proceso es totalmente en la nube. No gasta mis datos móviles ni mi batería." },
+            { name: "Elena Ramos", text: "Buscaba algo como MultCloud pero enfocado en Drive y CloudsTransfers superó mis expectativas. ¡Muy recomendado!" },
+            { name: "David G.", text: "He probado varios servicios, pero este es el más estable. No se corta la transferencia a mitad de camino." },
+            { name: "Lucía Fernández", text: "Súper útil para hacer copias de seguridad de mi Drive de trabajo a mi Drive personal. Muy seguro." },
+            { name: "Roberto K.", text: "Es la segunda vez que uso el servicio para una migración total de archivos y sigue funcionando de maravilla." }
+        ];
+
+        const slider = {
+            currentIndex: 0,
+            init: function() {
+                const container = document.getElementById('testimonial-slider');
+                testimonials.forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = "testimonial-card";
+                    card.innerHTML = `
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col justify-between text-center">
+                            <div>
+                                <h4 class="text-xl font-bold mb-4 text-slate-800">${t.name}</h4>
+                                <div class="flex justify-center mb-6 text-orange-500 text-lg">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                                <p class="text-slate-600 leading-relaxed text-sm">"${t.text}"</p>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                this.update();
+            },
+            next: function() {
+                const max = window.innerWidth >= 768 ? testimonials.length - 2 : testimonials.length - 1;
+                this.currentIndex = this.currentIndex >= max ? 0 : this.currentIndex + 1;
+                this.update();
+            },
+            prev: function() {
+                const max = window.innerWidth >= 768 ? testimonials.length - 2 : testimonials.length - 1;
+                this.currentIndex = this.currentIndex <= 0 ? max : this.currentIndex - 1;
+                this.update();
+            },
+            update: function() {
+                const container = document.getElementById('testimonial-slider');
+                const step = window.innerWidth >= 768 ? 33.333 : 100;
+                container.style.transform = `translateX(-${this.currentIndex * step}%)`;
+            }
+        };
+
         const app = {
             showView: function(name) {
                 ['landing', 'privacy', 'terms', 'auth'].forEach(v => {
-                    document.getElementById('view-' + v).classList.add('hidden');
+                    const el = document.getElementById('view-' + v);
+                    if (el) el.classList.add('hidden');
                 });
                 const target = document.getElementById('view-' + name);
                 if (target) target.classList.remove('hidden');
@@ -337,10 +507,18 @@
             },
             closeSidebar: function() {
                 if (window.innerWidth < 768) {
-                    document.getElementById('sidebar').classList.add('-translate-x-full');
-                    document.getElementById('sidebarOverlay').classList.add('hidden');
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('sidebarOverlay');
+                    if (sidebar) sidebar.classList.add('-translate-x-full');
+                    if (overlay) overlay.classList.add('hidden');
                 }
             }
+        };
+
+        window.onload = () => {
+            slider.init();
+            // Auto-play opcional
+            setInterval(() => slider.next(), 6000);
         };
     </script>
 </body>
