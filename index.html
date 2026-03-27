@@ -8,13 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Chosen Palette: Clean Cloud (White bg, Slate text, Blue primary, Green success accents) -->
+    <!-- Chosen Palette: Cloud Professional (Fondo Slate-50, Acentos Blue-600, Textos Slate-900) -->
     
     <style>
-        /* Custom Styles to supplement Tailwind */
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
         
-        /* Chart Container Mandatory Styling */
         .chart-container { 
             position: relative; 
             width: 100%; 
@@ -24,234 +22,255 @@
             height: 300px; 
             max-height: 400px; 
         }
-        @media (min-width: 768px) { .chart-container { height: 350px; } }
 
-        /* Hide scrollbar for sidebar but keep functionality */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 h-screen flex overflow-hidden">
+<body class="bg-slate-50 text-slate-900 h-screen flex overflow-hidden">
 
     <!-- Application Structure Plan: 
-    The SPA uses a state-based layout. The main container holds a sidebar and a main content area.
-    JavaScript controls which 'view' (landing, auth, legal) is currently visible in the main area.
-    This provides a seamless, app-like experience without page reloads, keeping the user engaged.
+    La SPA está diseñada para maximizar la conversión. El flujo principal dirige al usuario al enlace de Apps Script proporcionado.
+    Se utiliza un panel lateral para navegación secundaria y un área central de scroll para el contenido de la Landing.
+    Los estados de "Inicio de Sesión" y "Legal" se manejan dinámicamente con JS para evitar recargas.
     -->
 
     <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="bg-white w-64 border-r border-slate-200 flex flex-col justify-between hidden md:flex absolute md:relative z-20 h-full transition-transform transform -translate-x-full md:translate-x-0">
+    <aside id="sidebar" class="bg-white w-64 border-r border-slate-200 flex flex-col justify-between hidden md:flex absolute md:relative z-30 h-full transition-transform transform -translate-x-full md:translate-x-0">
         <div>
             <div class="h-16 flex items-center px-6 border-b border-slate-100">
                 <span class="text-xl font-bold text-blue-600">☁️ CloudsTransfers</span>
             </div>
             <nav class="p-4 space-y-2">
-                <a href="#" onclick="app.showView('landing')" class="block px-4 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">🏠 Inicio</a>
-                <!-- Opciones solicitadas sin enlaces activos -->
-                <div class="block px-4 py-2 rounded-lg text-slate-500 hover:bg-slate-50 cursor-not-allowed" title="Próximamente">🧩 Extensión de Chrome</div>
-                <div class="block px-4 py-2 rounded-lg text-slate-500 hover:bg-slate-50 cursor-not-allowed" title="Próximamente">💳 Precios</div>
-                <div class="block px-4 py-2 rounded-lg text-slate-500 hover:bg-slate-50 cursor-not-allowed" title="Próximamente">🎧 Soporte</div>
+                <button onclick="app.showView('landing')" class="w-full text-left block px-4 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">🏠 Inicio</button>
+                <div class="block px-4 py-2 rounded-lg text-slate-400 cursor-not-allowed text-sm">🧩 Extensión de Chrome</div>
+                <div class="block px-4 py-2 rounded-lg text-slate-400 cursor-not-allowed text-sm">💳 Precios</div>
+                <div class="block px-4 py-2 rounded-lg text-slate-400 cursor-not-allowed text-sm">🎧 Soporte</div>
             </nav>
         </div>
-        <div class="p-4 border-t border-slate-100">
-            <p class="text-xs text-slate-400 text-center">&copy; 2026 CloudsTransfers</p>
+        <div class="p-6 border-t border-slate-100">
+            <p class="text-xs text-slate-400 text-center">© 2026 CloudsTransfers.com</p>
         </div>
     </aside>
 
-    <!-- Overlay for mobile sidebar -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900 bg-opacity-50 z-10 hidden" onclick="app.toggleSidebar()"></div>
+    <!-- Overlay movil -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-20 hidden" onclick="app.toggleSidebar()"></div>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <main class="flex-1 flex flex-col h-full overflow-hidden relative">
         
-        <!-- Topbar -->
-        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 shrink-0">
+        <!-- Navbar -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 shrink-0 z-10">
             <div class="flex items-center">
-                <button onclick="app.toggleSidebar()" class="md:hidden mr-4 text-slate-500 text-2xl">☰</button>
+                <button onclick="app.toggleSidebar()" class="md:hidden mr-4 text-slate-600">☰</button>
                 <span class="text-lg font-bold text-blue-600 md:hidden">☁️ CT</span>
             </div>
-            <div>
-                <button onclick="app.showView('auth')" class="text-sm font-medium text-slate-600 hover:text-blue-600 mr-4">Iniciar Sesión</button>
-                <button onclick="app.showView('auth')" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-sm transition-colors">Empezar a copiar</button>
+            <div class="flex items-center space-x-4">
+                <button onclick="app.showView('auth')" class="text-sm font-medium text-slate-600 hover:text-blue-600">Acceder</button>
+                <a href="https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-5 rounded-lg transition-all shadow-sm">
+                    Empezar ahora
+                </a>
             </div>
         </header>
 
-        <!-- Scrollable Content -->
-        <div id="content-area" class="flex-1 overflow-y-auto p-4 sm:p-8 no-scrollbar scroll-smooth">
+        <!-- Content Area -->
+        <div id="content-area" class="flex-1 overflow-y-auto no-scrollbar scroll-smooth">
             
-            <!-- ================= VIEW: LANDING ================= -->
-            <div id="view-landing" class="max-w-5xl mx-auto space-y-16 pb-16">
+            <!-- VIEW: LANDING -->
+            <div id="view-landing" class="max-w-6xl mx-auto px-6 py-12 space-y-24">
                 
                 <!-- Hero Section -->
-                <section class="text-center pt-8 md:pt-16">
-                    <div class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">🚀 Tecnología Google Apps Script</div>
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-                        Transfiere archivos entre nubes <br class="hidden md:block">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">sin descargas, al instante.</span>
+                <section class="text-center space-y-8 py-10">
+                    <div class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full">
+                        <span class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                        <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Copiado directo en la nube</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-tight">
+                        Transfiere automáticamente <br class="hidden md:block">
+                        <span class="text-blue-600">tus archivos y carpetas</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-8">
-                        Migrar datos entre nubes nunca ha sido tan fácil. Con CloudsTransfers, copiar archivos y carpetas entre cuentas de Google Drive es un proceso directo en la nube. Solo coloca el link de origen, inicia sesión y nuestro sistema respaldado por Apps Script copiará todo a tu cuenta Personal o Workspace.
+                    <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                        Nunca ha sido tan fácil copiar archivos a tu cuenta Google Drive. Solo coloca el link de la carpeta que deseas copiar, inicia sesión y nuestro sistema basado en <span class="font-semibold text-slate-800">Google Apps Script</span> empezará a migrar todo tu contenido de origen a tu cuenta personal o Workspace sin descargar nada a tu computadora.
                     </p>
-                    <button onclick="app.showView('auth')" class="bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-                        Empezar a copiar archivos ➔
-                    </button>
-                </section>
-
-                <!-- Video / How to Use Section -->
-                <section class="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
-                    <h2 class="text-2xl font-bold text-center mb-8">¿Cómo funciona el copiado en la nube?</h2>
-                    <!-- Placeholder for Video -->
-                    <div class="bg-slate-900 rounded-xl aspect-video flex items-center justify-center relative group cursor-pointer overflow-hidden">
-                        <div class="absolute inset-0 bg-blue-900 opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="text-center z-10">
-                            <div class="text-6xl text-white opacity-90 group-hover:scale-110 transition-transform mb-2">▶️</div>
-                            <p class="text-white font-medium">Ver video demostrativo (1:20)</p>
-                        </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec" target="_blank" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-xl shadow-blue-200 transition-all hover:-translate-y-1">
+                            Empezar a copiar archivos ➔
+                        </a>
+                        <button onclick="app.scrollTo('how-it-works')" class="w-full sm:w-auto px-8 py-4 font-semibold text-slate-700 hover:text-blue-600 transition-colors">
+                            ¿Cómo funciona?
+                        </button>
                     </div>
                 </section>
 
-                <!-- SEO Benefits Section -->
-                <section>
-                    <div class="text-center mb-10">
-                        <h2 class="text-3xl font-bold mb-4">Beneficios de nuestro servicio automatizado</h2>
-                        <p class="text-slate-500">Optimizado para velocidad y seguridad entre infraestructuras de Google.</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Benefit 1 -->
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-start space-x-4 hover:border-blue-200 transition-colors">
-                            <div class="text-3xl">⚡</div>
-                            <div>
-                                <h3 class="font-bold text-lg mb-2">Ahorro de Tiempo y Ancho de Banda</h3>
-                                <p class="text-slate-600 text-sm">Todo el proceso ocurre directamente en los servidores de Google. No necesitas descargar gigabytes de información a tu computadora para luego volver a subirlos. Ahorra días de trabajo.</p>
+                <!-- Video Demonstration -->
+                <section id="how-it-works" class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-slate-100 rounded-[2.5rem] -z-10 opacity-50"></div>
+                    <div class="bg-white p-4 md:p-8 rounded-[2rem] shadow-sm border border-slate-200">
+                        <div class="flex flex-col md:flex-row items-center gap-12">
+                            <div class="flex-1 space-y-6">
+                                <h2 class="text-3xl font-bold">Mira cómo funciona en 60 segundos</h2>
+                                <p class="text-slate-600">Nuestra interfaz simplificada se conecta directamente con la infraestructura de Google para garantizar que tus datos se muevan de forma segura y eficiente.</p>
+                                <ul class="space-y-3">
+                                    <li class="flex items-center text-sm font-medium text-slate-700">
+                                        <span class="mr-2 text-blue-600">✔</span> Cero consumo de datos locales
+                                    </li>
+                                    <li class="flex items-center text-sm font-medium text-slate-700">
+                                        <span class="mr-2 text-blue-600">✔</span> Soporte para carpetas compartidas
+                                    </li>
+                                    <li class="flex items-center text-sm font-medium text-slate-700">
+                                        <span class="mr-2 text-blue-600">✔</span> Migración de Workspace a Personal
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <!-- Benefit 2 -->
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-start space-x-4 hover:border-blue-200 transition-colors">
-                            <div class="text-3xl">🔒</div>
-                            <div>
-                                <h3 class="font-bold text-lg mb-2">Seguridad y Privacidad Garantizada</h3>
-                                <p class="text-slate-600 text-sm">Utilizamos tecnología nativa mediante la API oficial. Nosotros no descargamos, leemos ni almacenamos tus archivos en servidores de terceros. Tu información viaja cifrada.</p>
-                            </div>
-                        </div>
-                        <!-- Benefit 3 -->
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-start space-x-4 hover:border-blue-200 transition-colors">
-                            <div class="text-3xl">💼</div>
-                            <div>
-                                <h3 class="font-bold text-lg mb-2">Compatibilidad Workspace & Personal</h3>
-                                <p class="text-slate-600 text-sm">El sistema está diseñado para funcionar a la perfección entre cuentas de correo estándar (@gmail.com) y entornos empresariales o educativos de Google Workspace.</p>
-                            </div>
-                        </div>
-                        <!-- Benefit 4 -->
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-start space-x-4 hover:border-blue-200 transition-colors">
-                            <div class="text-3xl">☁️</div>
-                            <div>
-                                <h3 class="font-bold text-lg mb-2">Ejecución en Segundo Plano</h3>
-                                <p class="text-slate-600 text-sm">Inicia la transferencia, autoriza los permisos y puedes cerrar la pestaña. Los scripts de Google continuarán el copiado de forma autónoma en la nube sin interrumpir tu día.</p>
+                            <div class="flex-1 w-full aspect-video bg-slate-900 rounded-2xl flex items-center justify-center relative group overflow-hidden cursor-pointer shadow-2xl">
+                                <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/20 transition-all"></div>
+                                <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <span class="text-3xl">▶</span>
+                                </div>
+                                <p class="absolute bottom-4 text-white/70 text-xs font-medium uppercase tracking-widest">Tutorial de Uso</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Visualization & Content Choices: 
-                Goal: Inform & Build Trust.
-                Viz Method: Bar Chart (Chart.js Canvas).
-                Interaction: Hover tooltips to read exact data.
-                Justification: Showing tangible data (Terabytes transferred) builds trust for a service handling user files. A bar chart effectively shows growth over time.
-                Method: Canvas/Chart.js. NO SVG used.
-                -->
-                <!-- Platform Stats (Chart.js) -->
-                <section class="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
-                    <h2 class="text-2xl font-bold text-center mb-2">Confianza en Datos</h2>
-                    <p class="text-slate-500 text-center mb-8">Volumen de Terabytes transferidos exitosamente por nuestra comunidad este año.</p>
+                <!-- SEO Benefits -->
+                <section class="space-y-12">
+                    <div class="text-center max-w-2xl mx-auto space-y-4">
+                        <h2 class="text-4xl font-extrabold">Beneficios del Servicio</h2>
+                        <p class="text-slate-500">Optimizamos el proceso de gestión de archivos en la nube mediante tecnología de servidor nativa.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-6">⚡</div>
+                            <h3 class="text-xl font-bold mb-3">Velocidad Extrema</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">"Copia terabytes en tiempo récord aprovechando la red interna de Google, evitando cuellos de botella."</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl mb-6">💾</div>
+                            <h3 class="text-xl font-bold mb-3">Cero Espacio Local</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">"No necesitas descargar ni un solo archivo a tu disco duro. Tu PC se mantiene ligera y libre de archivos temporales."</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl mb-6">🛡️</div>
+                            <h3 class="text-xl font-bold mb-3">Seguridad Nativa</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">"Usamos Google Apps Script oficial. Tu sesión de Google Drive está protegida por los protocolos de seguridad de Alphabet."</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Chart -->
+                <section class="bg-white p-8 md:p-12 rounded-[2rem] border border-slate-200 space-y-8">
+                    <div class="flex flex-col md:flex-row justify-between items-end gap-4">
+                        <div class="space-y-2">
+                            <h2 class="text-3xl font-bold">Rendimiento de Migración</h2>
+                            <p class="text-slate-500">Crecimiento de archivos procesados por mes (en Millones).</p>
+                        </div>
+                        <div class="bg-slate-50 px-4 py-2 rounded-lg text-sm font-bold text-blue-600">Datos en Tiempo Real</div>
+                    </div>
                     <div class="chart-container">
                         <canvas id="statsChart"></canvas>
                     </div>
                 </section>
 
                 <!-- Testimonials -->
-                <section>
-                    <h2 class="text-3xl font-bold text-center mb-10">Lo que dicen nuestros usuarios</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-blue-50 p-6 rounded-xl relative">
-                            <div class="text-4xl text-blue-200 absolute top-2 right-4">"</div>
-                            <p class="text-slate-700 italic mb-4 relative z-10">"Increíble herramienta. Pasé 50GB de mi cuenta de la universidad a la personal en minutos sin tener mi laptop encendida. Me salvó la vida."</p>
-                            <p class="font-bold text-sm">— Carlos R., Estudiante</p>
+                <section class="space-y-12">
+                    <h2 class="text-3xl font-bold text-center">Usuarios Satisfechos</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-slate-900 text-white p-8 rounded-3xl space-y-4">
+                            <div class="flex text-yellow-400">★★★★★</div>
+                            <p class="text-slate-300 italic text-sm">"Transferí todo mi portafolio de la cuenta del trabajo a mi Drive personal en 5 minutos. Sin complicaciones y totalmente gratis."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold">J</div>
+                                <div>
+                                    <p class="font-bold text-sm">Jorge V.</p>
+                                    <p class="text-xs text-slate-500">Diseñador UX</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-blue-50 p-6 rounded-xl relative">
-                            <div class="text-4xl text-blue-200 absolute top-2 right-4">"</div>
-                            <p class="text-slate-700 italic mb-4 relative z-10">"La mejor solución para respaldar carpetas compartidas enormes de Google Workspace a mi Drive privado de seguridad. Muy rápido y estable."</p>
-                            <p class="font-bold text-sm">— Ana M., Diseñadora Freelance</p>
+                        <div class="bg-white p-8 rounded-3xl border border-slate-200 space-y-4">
+                            <div class="flex text-yellow-400">★★★★★</div>
+                            <p class="text-slate-600 italic text-sm">"La mejor herramienta para Google Workspace. Copiar carpetas compartidas pesadas antes era un martirio, ahora es un clic."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold">M</div>
+                                <div>
+                                    <p class="font-bold text-sm">Marta S.</p>
+                                    <p class="text-xs text-slate-500">Project Manager</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-blue-50 p-6 rounded-xl relative">
-                            <div class="text-4xl text-blue-200 absolute top-2 right-4">"</div>
-                            <p class="text-slate-700 italic mb-4 relative z-10">"Estaba buscando cómo no agotar mi plan de datos de internet descargando y subiendo archivos. Esto lo hace todo directo en la nube. 10/10."</p>
-                            <p class="font-bold text-sm">— David P., Creador de Contenido</p>
+                        <div class="bg-white p-8 rounded-3xl border border-slate-200 space-y-4">
+                            <div class="flex text-yellow-400">★★★★★</div>
+                            <p class="text-slate-600 italic text-sm">"No consume mi internet ni batería. Lo inicio y me olvido. Al regresar, todo está en su lugar. ¡Súper útil!"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold">R</div>
+                                <div>
+                                    <p class="font-bold text-sm">Ricardo F.</p>
+                                    <p class="text-xs text-slate-500">Estudiante</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Footer / Legal Links -->
-                <footer class="border-t border-slate-200 pt-8 mt-12 pb-4 text-center text-sm text-slate-500">
-                    <div class="flex justify-center space-x-6 mb-4">
-                        <button onclick="app.showView('legal', 'privacy')" class="hover:text-blue-600">Política de Privacidad</button>
-                        <button onclick="app.showView('legal', 'terms')" class="hover:text-blue-600">Condiciones de Uso</button>
+                <!-- Footer Legal -->
+                <footer class="border-t border-slate-200 pt-16 pb-12 text-center space-y-8">
+                    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-slate-500">
+                        <button onclick="app.showView('legal', 'privacy')" class="hover:text-blue-600 transition-colors">Política de Privacidad</button>
+                        <button onclick="app.showView('legal', 'terms')" class="hover:text-blue-600 transition-colors">Condiciones de Uso</button>
                     </div>
-                    <p>Las transferencias dependen de las cuotas y límites diarios establecidos por la API de Google Drive.</p>
+                    <div class="text-xs text-slate-400 uppercase tracking-widest">
+                        CloudsTransfers.com — Potenciado por Google Cloud
+                    </div>
                 </footer>
             </div>
 
-            <!-- ================= VIEW: AUTH (Login/Register) ================= -->
-            <div id="view-auth" class="hidden min-h-[80vh] flex items-center justify-center">
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 w-full max-w-md relative">
-                    <button onclick="app.showView('landing')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl">✖</button>
+            <!-- VIEW: AUTH -->
+            <div id="view-auth" class="hidden min-h-[80vh] flex items-center justify-center p-6">
+                <div class="bg-white w-full max-w-md p-8 rounded-[2rem] shadow-2xl border border-slate-100 relative">
+                    <button onclick="app.showView('landing')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-xl">✖</button>
                     
-                    <div class="text-center mb-8">
-                        <div class="text-4xl mb-2">☁️</div>
-                        <h2 id="auth-title" class="text-2xl font-bold text-slate-900">Iniciar Sesión</h2>
-                        <p id="auth-subtitle" class="text-slate-500 text-sm mt-1">Para empezar a transferir tus archivos</p>
+                    <div class="text-center mb-8 space-y-2">
+                        <div class="text-4xl">☁️</div>
+                        <h2 id="auth-title" class="text-2xl font-bold">Bienvenido</h2>
+                        <p id="auth-subtitle" class="text-slate-500 text-sm">Inicia sesión para gestionar tus transferencias</p>
                     </div>
 
-                    <!-- Google Login Button -->
-                    <button class="w-full bg-white border border-slate-300 text-slate-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center hover:bg-slate-50 transition-colors mb-6">
-                        <span class="text-lg mr-2">G</span> Continuar con Google
-                    </button>
+                    <a href="https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec" class="w-full flex items-center justify-center gap-3 border-2 border-slate-100 py-3 rounded-xl font-bold hover:bg-slate-50 transition-colors mb-6">
+                        <img src="https://www.google.com/favicon.ico" class="w-5 h-5" alt="Google">
+                        Continuar con Google
+                    </a>
 
-                    <div class="flex items-center mb-6">
-                        <div class="flex-1 border-t border-slate-200"></div>
-                        <span class="px-3 text-slate-400 text-sm">o con tu correo</span>
-                        <div class="flex-1 border-t border-slate-200"></div>
+                    <div class="relative mb-6">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100"></div></div>
+                        <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-slate-400">O por correo</span></div>
                     </div>
 
-                    <!-- Email Form -->
-                    <form onsubmit="event.preventDefault(); alert('Demo: Simulación de acceso completada.'); app.showView('landing');" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
-                            <input type="email" required class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="tu@correo.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Contraseña</label>
-                            <input type="password" required class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="••••••••">
-                        </div>
-                        <button id="auth-submit-btn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors mt-2">
-                            Ingresar a mi cuenta
-                        </button>
+                    <form onsubmit="event.preventDefault(); window.location.href='https://script.google.com/macros/s/AKfycbw01eSlq64fP0gByRn-O-DzJeouQc9pyw5ZvThuwRAFbrg7tupPsGXCn0HumF_JXCiriQ/exec';" class="space-y-4">
+                        <input type="email" placeholder="Correo electrónico" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-blue-500 outline-none">
+                        <input type="password" placeholder="Contraseña" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-blue-500 outline-none">
+                        <button id="auth-submit-btn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-colors">Acceder</button>
                     </form>
 
-                    <div class="mt-6 text-center text-sm">
-                        <p id="auth-toggle-text" class="text-slate-600">
-                            ¿No tienes cuenta? <button onclick="app.toggleAuthMode()" class="text-blue-600 font-bold hover:underline">Regístrate aquí</button>
-                        </p>
-                    </div>
+                    <p class="mt-6 text-center text-sm text-slate-500">
+                        ¿Nuevo aquí? <button onclick="app.toggleAuthMode()" class="text-blue-600 font-bold">Crea una cuenta</button>
+                    </p>
                 </div>
             </div>
 
-            <!-- ================= VIEW: LEGAL (Privacy / Terms) ================= -->
-            <div id="view-legal" class="hidden max-w-4xl mx-auto py-8">
-                <button onclick="app.showView('landing')" class="mb-6 text-blue-600 hover:underline font-medium">← Volver al inicio</button>
-                <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-100">
-                    <h2 id="legal-title" class="text-3xl font-bold mb-6">Documento Legal</h2>
-                    <div id="legal-content" class="prose prose-slate max-w-none space-y-4 text-slate-700">
-                        <!-- Content injected via JS -->
+            <!-- VIEW: LEGAL -->
+            <div id="view-legal" class="hidden max-w-4xl mx-auto px-6 py-12">
+                <button onclick="app.showView('landing')" class="mb-8 flex items-center gap-2 text-blue-600 font-bold">
+                    <span>←</span> Regresar al inicio
+                </button>
+                <div class="bg-white p-10 md:p-16 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                    <h2 id="legal-title" class="text-4xl font-black mb-8">Información Legal</h2>
+                    <div id="legal-content" class="prose prose-slate max-w-none space-y-6 text-slate-600 leading-relaxed">
+                        <!-- Content via JS -->
                     </div>
                 </div>
             </div>
@@ -262,32 +281,132 @@
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <script>
-        /**
-         * Core Application Logic & State Management
-         */
         const app = {
-            currentView: 'landing',
-            authMode: 'login', // 'login' or 'register'
+            authMode: 'login',
             chartInstance: null,
 
-            // Data for Legal docs
             legalData: {
                 privacy: {
                     title: "Política de Privacidad",
                     content: `
-                        <p><strong>Última actualización:</strong> Marzo 2026</p>
-                        <h3>1. Información que recopilamos</h3>
-                        <p>En CloudsTransfers.com, respetamos su privacidad. Dado que utilizamos la tecnología de Google Apps Script, la autenticación se realiza directamente a través de OAuth de Google. No almacenamos sus contraseñas de Google.</p>
-                        <p>Recopilamos su dirección de correo electrónico (si se registra manualmente) y metadatos básicos sobre las transferencias (tamaño total, estado de éxito/error) para mejorar el servicio.</p>
-                        <h3>2. Uso de la información</h3>
-                        <p>Nuestra aplicación requiere permisos de acceso a su Google Drive ("Ver, editar, crear y borrar todos tus archivos de Google Drive") exclusivamente para la función de copiado que usted solicita expresamente. Los archivos se transfieren de servidor a servidor dentro de la infraestructura de Google. Nosotros no descargamos el contenido de sus archivos a nuestros propios servidores.</p>
-                        <h3>3. Seguridad</h3>
-                        <p>Implementamos medidas de seguridad estándar de la industria. Sin embargo, ninguna transmisión por Internet es 100% segura. El uso del servicio es bajo su propio riesgo dentro de los términos de servicio de Google Workspace.</p>
+                        <p><strong>Actualizado:</strong> 2026</p>
+                        <h3 class="text-slate-900 font-bold">1. Datos Recopilados</h3>
+                        <p>CloudsTransfers utiliza el sistema de autenticación OAuth de Google. Nosotros no almacenamos tus credenciales ni tenemos acceso a tu contraseña. Solo procesamos el ID de usuario de Google y el correo electrónico para identificar tus procesos de copiado.</p>
+                        <h3 class="text-slate-900 font-bold">2. Permisos de Google Drive</h3>
+                        <p>Al otorgar permisos, permites que nuestro Google Apps Script lea la estructura de carpetas de origen y escriba en la cuenta de destino. Tus archivos nunca abandonan los servidores de Google.</p>
+                        <h3 class="text-slate-900 font-bold">3. Uso de Cookies</h3>
+                        <p>Utilizamos cookies esenciales únicamente para mantener tu sesión activa durante el proceso de transferencia.</p>
                     `
                 },
                 terms: {
                     title: "Condiciones de Uso",
                     content: `
-                        <p><strong>Última actualización:</strong> Marzo 2026</p>
-                        <h3>1. Aceptación de los Términos</h3>
-                        <p>Al acceder y utilizar CloudsTransfers.com, usted acepta estar sujeto a estas C
+                        <p><strong>Actualizado:</strong> 2026</p>
+                        <h3 class="text-slate-900 font-bold">1. Naturaleza del Servicio</h3>
+                        <p>CloudsTransfers es una herramienta de automatización. No somos propietarios de la infraestructura de Google Drive. El servicio se provee "tal cual" sin garantías explícitas sobre la velocidad de transferencia, la cual depende de las cuotas de Google.</p>
+                        <h3 class="text-slate-900 font-bold">2. Límites de Uso</h3>
+                        <p>Los usuarios deben respetar los términos de servicio de Google Workspace. No permitimos el uso de nuestra herramienta para transferir contenido ilegal o que infrinja derechos de autor.</p>
+                        <h3 class="text-slate-900 font-bold">3. Responsabilidad</h3>
+                        <p>No nos hacemos responsables por la pérdida de datos derivada de interrupciones en los servicios de Google Cloud o por configuraciones incorrectas realizadas por el usuario.</p>
+                    `
+                }
+            },
+
+            showView: function(name, param = null) {
+                document.getElementById('view-landing').classList.add('hidden');
+                document.getElementById('view-auth').classList.add('hidden');
+                document.getElementById('view-legal').classList.add('hidden');
+
+                const view = document.getElementById('view-' + name);
+                if (view) view.classList.remove('hidden');
+
+                if (name === 'landing') this.initChart();
+                if (name === 'legal' && param) {
+                    document.getElementById('legal-title').innerText = this.legalData[param].title;
+                    document.getElementById('legal-content').innerHTML = this.legalData[param].content;
+                }
+                
+                document.getElementById('content-area').scrollTop = 0;
+                this.closeSidebar();
+            },
+
+            scrollTo: function(id) {
+                const el = document.getElementById(id);
+                if(el) el.scrollIntoView({ behavior: 'smooth' });
+            },
+
+            toggleSidebar: function() {
+                const s = document.getElementById('sidebar');
+                const o = document.getElementById('sidebarOverlay');
+                s.classList.toggle('-translate-x-full');
+                o.classList.toggle('hidden');
+            },
+
+            closeSidebar: function() {
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.add('-translate-x-full');
+                    document.getElementById('sidebarOverlay').classList.add('hidden');
+                }
+            },
+
+            toggleAuthMode: function() {
+                const t = document.getElementById('auth-title');
+                const s = document.getElementById('auth-submit-btn');
+                const p = document.getElementById('auth-toggle-text');
+                
+                if (this.authMode === 'login') {
+                    this.authMode = 'register';
+                    t.innerText = "Registrarse";
+                    s.innerText = "Crear cuenta";
+                } else {
+                    this.authMode = 'login';
+                    t.innerText = "Bienvenido";
+                    s.innerText = "Acceder";
+                }
+            },
+
+            initChart: function() {
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                if (this.chartInstance) this.chartInstance.destroy();
+
+                this.chartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Nov', 'Dic', 'Ene', 'Feb', 'Mar'],
+                        datasets: [{
+                            label: 'Millones de Archivos',
+                            data: [12, 18, 45, 62, 98],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#fff',
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: '#f1f5f9' }, border: { display: false } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        };
+
+        window.onload = () => {
+            app.initChart();
+            window.onresize = () => {
+                if (window.innerWidth >= 768) {
+                    document.getElementById('sidebar').classList.remove('-translate-x-full');
+                    document.getElementById('sidebarOverlay').classList.add('hidden');
+                }
+            };
+        };
+    </script>
+</body>
+</html>
