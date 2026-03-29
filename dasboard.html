@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contenido incrustado</title>
+</head>
+<cuerpo>
+  <iframe
+    src="https://script.google.com/macros/s/AKfycbwV-eQRfuUrZMYDZSAMSolkXyKqbCfOi01iTP_7cR2UbfDiEMlVQk6z1UmOtBJlZtPc/exec"
+    ancho="100%"
+    altura="100%"
+    permitirpantallacompleta="verdadero"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+  </iframe>
+
+  <script>
+    ventana.onload = función() {
+      documento.querySelector('iframe')
+        .requestFullscreen()
+        .catch((err) => {
+          console.error('Error al intentar habilitar el modo de pantalla completa:', err.message);
+        });
+    };
+  </script>
+</body>
+</html>
+        
